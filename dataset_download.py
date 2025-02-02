@@ -1,5 +1,4 @@
 from pathlib import Path
-import pandas as pd
 import tarfile
 import urllib.request
 import os
@@ -16,6 +15,7 @@ def download_dataset():
     return Path("datasets/housing")
 
 housing_data = download_dataset()
+
 if housing_data.is_dir():
     if 'housing.csv' in os.listdir(housing_data):
         print("Dataset already downloaded")
@@ -23,5 +23,4 @@ if housing_data.is_dir():
         print("Extracting the dataset")
         with tarfile.open(tarball_path) as housing_tarball:
             housing_tarball.extractall(path="datasets")
-housing = pd.read_csv(housing_data / "housing.csv")
-print(housing.head())
+
