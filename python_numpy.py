@@ -10,10 +10,13 @@ and array transformations.
 
 Key Features:
     - Array creation (1D to 4D)
-    - Basic arithmetic operations
+    - Basic arithmetic operations 
     - Mathematical functions (sqrt, exp, log, trigonometric)
     - Array transformations (reshape, transpose, flatten)
     - Matrix operations (dot product)
+    - Broadcasting operations
+    - Array slicing and indexing
+    - Array shape manipulations
 
 Requirements:
     - NumPy >= 1.19.0
@@ -81,12 +84,14 @@ def perform_arithmetic_operations(arr1, arr2):
         
     Raises:
         ValueError: If arrays have incompatible shapes
+        ZeroDivisionError: If division by zero is attempted
         
     Example:
         >>> a = np.array([1, 2, 3])
         >>> b = np.array([4, 5, 6])
         >>> results = perform_arithmetic_operations(a, b)
         >>> print(results['sum'])
+        >>> print(results['difference'])
     """
     try:
         results = {
@@ -95,7 +100,7 @@ def perform_arithmetic_operations(arr1, arr2):
             'product': arr1 * arr2,
             'division': arr1 / arr2
         }
-        return results
+ 
     except ValueError as e:
         print(f"Error in arithmetic operations: {e}")
         raise
@@ -135,6 +140,39 @@ def mathematical_functions(arr):
         print(f"Error in mathematical operations: {e}")
         raise
 
+def transpose_matrix(arr):
+    """
+    Transposes a matrix/array.
+    
+    Args:
+        arr (np.ndarray): Input array to transpose
+        
+    Returns:
+        np.ndarray: Transposed array
+        
+    Example:
+        >>> arr = np.array([[1, 2], [3, 4]])
+        >>> transposed = transpose_matrix(arr)
+        >>> print(transposed)
+    """
+    return arr.T
+
+def auto_broadcast(arr):
+    """
+    Demonstrates NumPy's broadcasting capabilities by adding a scalar to an array.
+    
+    Args:
+        arr (np.ndarray): Input array for broadcasting demonstration
+        
+    Example:
+        >>> arr = np.array([[1, 2], [3, 4]])
+        >>> auto_broadcast(arr)
+    """
+    print("Original Array: ", arr)
+    broadcasted_matrix = arr + 10
+    print("Result after broadcasting:")
+    print(broadcasted_matrix)
+
 def array_transformations(arr):
     """
     Demonstrates various array transformation operations.
@@ -143,7 +181,11 @@ def array_transformations(arr):
         arr (np.ndarray): Input array
         
     Returns:
-        dict: Dictionary containing transformed arrays
+        dict: Dictionary containing transformed arrays including:
+            - transpose: Transposed array
+            - flatten: 1D flattened array
+            - zeros: Zero array of same shape
+            - ones: Array of ones with same shape
         
     Raises:
         ValueError: If reshape dimensions are incompatible
@@ -168,7 +210,16 @@ def main():
     """
     Main function to demonstrate NumPy operations.
     
-    This function runs through all the major operations and prints results.
+    This function runs through all the major operations and prints results:
+    - Array creation and dimension checking
+    - Mathematical operations
+    - Array transformations
+    - Matrix operations (dot product, transpose)
+    - Broadcasting demonstrations
+    - Array slicing and indexing examples
+    
+    Raises:
+        Exception: If any operation fails during execution
     """
     try:
         # Create arrays
@@ -201,6 +252,30 @@ def main():
         print("\nDot Product:")
         dot_product = np.dot(arr, arr2d.T)
         print(dot_product)
+
+        print("\nTranspose Matrix:")
+        transposed_matrix = transpose_matrix(arr2d)
+        print(transposed_matrix)
+
+        # Broadcasting demonstration
+        print("\nBroadcasting:")
+        print("Original Array: ", arr2d)
+        broadcasted_matrix = arr2d + 10  # Adds 10 to each element of arr2d
+        print("Original matrix shape:", arr2d.shape)
+        print("Result after broadcasting:")
+        print(broadcasted_matrix)
+
+        # Array slicing demonstration
+        print("\nSlicing np array:")
+        print("Original Array: ", arr2d)
+        sliced_matrix = arr2d[1:3, 1:3] 
+        sliced_matrix_by_index = arr[1:2]
+    
+        print("Sliced matrix:")
+        print(sliced_matrix)
+        print("Sliced matrix by index:")
+        print(sliced_matrix_by_index) 
+        print("original 1d array:", arr)
 
     except Exception as e:
         print(f"An error occurred in main: {e}")
